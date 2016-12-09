@@ -1,0 +1,91 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+#brd-wrapper h2 {
+	font-family: inherit;
+    font-style: normal;
+    font-size: 20px;
+    color: #444;
+    line-height: 44px;
+    letter-spacing: 1px;
+}
+
+#brd-wrapper {
+	padding: 15px;
+	width: 100%;
+	max-width: 512px;
+	height: auto;
+}
+
+#brd-wrapper label { 
+	display: block;
+	float: left;
+	width: 150px; 
+}
+
+#brd-wrapper input[type="text"],
+#brd-wrapper input[type="email"],
+#brd-wrapper input[type="password"] {
+    position: relative;
+    width: 20em;
+    left: 15px;
+}
+
+#brd-wrapper input[type="number"] {
+    position: relative;
+    width: 5em;
+    left: 15px;
+}
+
+#brd-wrapper input[type="checkbox"] {
+    float: right;
+}
+
+/* TABS*/
+
+#brd-wrapper ul.tabs{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#brd-wrapper ul.tabs li{
+	margin: 0;
+	background: none;
+	color: #222;
+	display: inline-block;
+	padding: 10px 15px;
+	cursor: pointer;
+}
+
+#brd-wrapper ul.tabs li.current{
+	margin: 0;
+	background: #ededed;
+	color: #222;
+}
+
+#brd-wrapper .tab-content{
+	display: none;
+	background: #ededed;
+	padding: 15px;
+}
+
+#brd-wrapper .tab-content.current{
+	display: inherit;
+}
+
+/* TABS/DASHICONS */
+
+#brd-wrapper span.dashicons.dashicons-admin-users {
+    margin-right: 10px;
+}
+
+#brd-wrapper span.dashicons.dashicons-list-view {
+    margin-right: 10px;
+}
+
+#brd-wrapper span.dashicons.dashicons-share-alt2 {
+    margin-right: 10px;
+}
