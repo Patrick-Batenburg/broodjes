@@ -1,10 +1,57 @@
 [
     {
-        "sieges": "Ham",
-        "price": "3.45"
+        "siege_id": "19",
+        "sieges": "Bruin broodje",
+        "price": "1.00"
     },
     {
-        "sieges": "Kaas",
-        "price": "4.55"
+        "siege_id": "18",
+        "sieges": "Plakje Kipfilet",
+        "price": "0.25"
+    },
+    {
+        "siege_id": "17",
+        "sieges": "Plakje Kaas",
+        "price": "0.30"
+    },
+    {
+        "siege_id": "16",
+        "sieges": "Plakje Ham",
+        "price": "0.25"
+    },
+    {
+        "siege_id": "20",
+        "sieges": "Wit broodje",
+        "price": "1.00"
+    },
+    {
+        "siege_id": "21",
+        "sieges": "Hagelslag",
+        "price": "0.45"
+    },
+    {
+        "siege_id": "22",
+        "sieges": "Pasta met kaas",
+        "price": "3.50"
+    },
+    {
+        "siege_id": "23",
+        "sieges": "Broodje gezond met zalm",
+        "price": "1.70"
+    },
+    {
+        "siege_id": "24",
+        "sieges": "Melk 0.25cl",
+        "price": "0.85"
+    },
+    {
+        "siege_id": "25",
+        "sieges": "Thee",
+        "price": "0.50"
+    },
+    {
+        "siege_id": "26",
+        "sieges": "Koffie",
+        "price": "0.60"
     }
 ]

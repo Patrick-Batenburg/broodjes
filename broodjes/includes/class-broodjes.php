@@ -58,6 +58,15 @@ class Broodjes {
 	protected $version;
 
 	/**
+	 * Retrieve the error message when not logged in.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $version    The current version of the plugin.
+	 */
+	protected $error;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -69,7 +78,8 @@ class Broodjes {
 	public function __construct() {
 
 		$this->broodjes = 'broodjes';
-		$this->version = '1.0.0';
+		$this->version 	= '1.0.0';
+		$this->error 	= 'U bent niet ingelogged';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -238,14 +248,14 @@ class Broodjes {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Broodjes_Public( $this->get_broodjes(), $this->get_version() );
+		$plugin_public = new Broodjes_Public( $this->get_broodjes(), $this->get_version(), $this->get_error() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		$this->loader->add_shortcode( 'bestelformulier', $plugin_public, 'render_form' );
-		
-
+		$this->loader->add_shortcode( 'checkout', $plugin_public, 'render_cart' );
+		$this->loader->add_action( 'admin_post_submit_user_order', $plugin_public, 'handle_user_order' );
 	}
 
 	/**
@@ -257,7 +267,7 @@ class Broodjes {
 	 */
 	private function define_public_users_hooks() {
 
-		$plugin_public = new Broodjes_Public_Users( $this->get_broodjes(), $this->get_version() );
+		$plugin_public = new Broodjes_Public_Users( $this->get_broodjes(), $this->get_version(), $this->get_error() );
 
 		$this->loader->add_action( 'init', $plugin_public, 'redirect_login_page' );
 		$this->loader->add_action( 'wp_login_failed', $plugin_public, 'login_failed' );
@@ -305,6 +315,16 @@ class Broodjes {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Retrieve the error message when not logged in.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The error message when a user is not logged in.
+	 */
+	public function get_error() {
+		return $this->error;
 	}
 
 }

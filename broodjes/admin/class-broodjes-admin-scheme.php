@@ -60,37 +60,51 @@ class Broodjes_Admin_Scheme {
 		<h2>Verstuur bestelformulier</h2>
 		
 		<section id="sieges">
-				<h3>Stel het formulier samen</h3>
-		<form action="<?php echo esc_url( ( admin_url('admin-post.php') ) ); ?>" method="post">	
+		
+			<h3>Stel het formulier samen</h3>
+			
+			<form action="<?php echo esc_url( ( admin_url('admin-post.php') ) ); ?>" method="post">	
 
-			 <table style="width:100%;">
-                <tr><td><b>Datum: </b><?php date_default_timezone_set('Europe/Amsterdam'); echo date("d-m-Y");?></td></tr>
-			    <tr>
-                    <td><b>Selecteer alles: </b></td>
-                    <td></td>
-                    <td><input type="checkbox" name="all_form_sieges" id="all_form_sieges" /></td>
-                </tr>
-            </table><br>
+				 <table style="width:100%;">
+	                <tr>
+	                	<td>
+	                		<b>Datum: </b>
+	                		<?php date_default_timezone_set('Europe/Amsterdam'); echo date("d-m-Y");?>
+	                	</td>
+	                </tr>
+				    <tr>
+	                    <td>
+	                    	<b>Selecteer alles: </b>
+	                    </td>
+	                    <td></td>
+	                    <td>
+	                    	<input type="checkbox" name="all_form_sieges" id="all_form_sieges" checked>
+	                    </td>
+	                </tr>
+	            </table><br>
 
-			 <table style="width:100%;">
-                 <tr>
-                    <td><b>Beleg:</b></td>
-                    <td><b>Prijs:</b></td>
-                 </tr>
-                 <tr>
-                    <?php foreach ($this->get_sieges() as $siege) : ?>
-                        <td><?php echo  $siege->siege_name . "</td><td>€  " . $siege->siege_price ;?></td> 
-                        <td><input name="checkbox_sieges[]" type="checkbox" name="select_form_sieges" value="<?=$siege->siege_id; ?>"></td>
-                 </tr>
-                    <?php endforeach; ?>
-            </table><br>
-         </section>
-			<input type="hidden" name="action" value="collect_sieges_for_submit">
-			<input type="submit" name="select_for_form" class="button button-secondary" value="Verstuur">
-		</form><br>
+				 <table style="width:100%;">
+	                 <tr>
+	                    <td><b>Beleg:</b></td>
+	                    <td><b>Prijs:</b></td>
+	                 </tr>
+	                 <tr>
+	                    <?php foreach ($this->get_sieges() as $siege) : ?>
+	                        <td><?php echo  $siege->siege_name . "</td><td>€  " . $siege->siege_price ;?></td> 
+	                        <td><input name="checkbox_scheme_sieges[]" type="checkbox" name="select_form_sieges" value="<?=$siege->siege_id; ?>" checked></td>
+	                 </tr>
+	                    <?php endforeach; ?>
+	            </table><br>
+	        
+				<input type="hidden" name="action" value="collect_sieges_for_submit">
+				<input type="submit" name="select_for_form" class="button button-secondary" value="Verstuur">
+			</form>
+			<br>
+		</section>
 	<?php
 
 	}
+
 
     public function get_sieges()
 	{
@@ -106,7 +120,7 @@ class Broodjes_Admin_Scheme {
 	{
 		global $wpdb;
 
-		$form = $_POST['checkbox_sieges'];
+		$form = $_POST['checkbox_scheme_sieges'];
 		$file = plugin_dir_path(__FILE__) . "data/bestelformulier.json";
 		$tempArray = array();
 
@@ -118,10 +132,11 @@ class Broodjes_Admin_Scheme {
 
 		foreach ($form as $selectedFromForm) 
 		{
-			$data = $wpdb->get_results("SELECT `siege_name`, `siege_price` FROM `wp5415_sieges` WHERE siege_id=$selectedFromForm") or die("Geen resultaten.");
+			$data = $wpdb->get_results("SELECT * FROM `wp5415_sieges` WHERE siege_id=$selectedFromForm") or die("Geen resultaten.");
 
 		
 			$jsonString = array(
+				'siege_id'	=> $data[0]->siege_id,
 				'sieges' 	=> $data[0]->siege_name,
 				'price' 	=> $data[0]->siege_price
 			);

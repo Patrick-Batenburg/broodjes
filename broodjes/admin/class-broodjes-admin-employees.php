@@ -124,7 +124,6 @@ class Broodjes_Admin_Employees {
 	    $employee_pwd = sanitize_text_field($_POST['employee_password']);
 	    $employee_pwd_confirm = sanitize_text_field($_POST['employee_password_confirm']);
 
-	    //$wpdb->query("INSERT INTO `wp5415_employees`(`employee_name`, `email`) VALUES ( '$employee_name', '$employee_email')");
 	    if($employee_pwd != $employee_pwd_confirm) 
 	    {
 	    	die("Wachtwoord komt niet met elkaar overeen.");
@@ -133,11 +132,9 @@ class Broodjes_Admin_Employees {
 	    $employee_id = username_exists( $employee_name );
 		if ( !$employee_id && email_exists($employee_email) == false ) 
 		{
-			//$random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
 			$employee_id = wp_create_user( $employee_name, $employee_pwd, $employee_email );
 
 			// after processing redirect back to the side
-		    https://codex.wordpress.org/Function_Reference/wp_redirect
 		    $url = esc_url( admin_url('admin.php?page=broodjes_options') );
 		    if ( wp_redirect( $url ) ) {
 		    	exit;

@@ -59,7 +59,7 @@
 	 	// SELECT ALL FORM CHECKBOXES
 	  $('input[name="all_form_sieges"],input[name="select_form_sieges"]').bind('click', function(){
 		var status = $(this).is(':checked');
-		$('input[name="checkbox_sieges[]"]').attr('checked', status);
+		$('input[name="checkbox_scheme_sieges[]"]').attr('checked', status);
 	 
 	 });
 

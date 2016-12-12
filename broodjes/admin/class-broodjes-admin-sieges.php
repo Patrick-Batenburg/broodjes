@@ -65,7 +65,7 @@ class Broodjes_Admin_Sieges {
 			
 			<label>Prijs:</label>
 			    <input type="number" name="siege_price_one" MIN="0" MAX="100" required>
-			    <input type="number" name="siege_price_two" MIN="5" MAX="99" STEP="05" required>
+			    <input type="number" name="siege_price_two" MIN="0" MAX="99" STEP="05">
 			    	<br>
 			    <input type="hidden" name="action" value="sieges_process_form"><br>
 				<input type="submit" name="add_siege" class="button button_secondary" value="Opslaan">
