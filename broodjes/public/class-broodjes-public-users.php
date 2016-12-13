@@ -72,6 +72,7 @@ class Broodjes_Public_Users {
 		{
 			return '<a href="' . wp_logout_url( get_home_url() ) . '" class="button button_secondary" id="logout_button">Uitloggen</a>';
 		}
+		else
 		{
 			$args = array(
 		        'redirect' => home_url(), 

@@ -8,29 +8,6 @@
 	top: 25px;
 }
 
-/*Bestelformulier*/
-
-#bestelformulier {
-	position: relative;
-	width: 100%;
-	height: auto;
-	padding: 25px;
-}
-#bestelformulier h1 {
-	font-family: sans-serif;
-	font-size: 2em;
-	font-weight: 200;
-	line-height: 3em;
-	color: rgba(50,50,35,.6);
-	margin-bottom: 35px;
-}
-#bestelformulier p {
-	font-size: 1.2em;
-}
-#bestelformulier p span {
-	float: right;
-}
-
 /*Cart*/
 
 #checkout_cart {

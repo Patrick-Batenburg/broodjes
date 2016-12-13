@@ -20,7 +20,7 @@
  * @subpackage Broodjes/public
  * @author     Silvas <stage@silvas.nl>
  */
-class Broodjes_Public {
+class Broodjes_Public_Form {
 
 	/**
 	 * The ID of this plugin.
@@ -49,6 +49,7 @@ class Broodjes_Public {
 	 */
 	private $error;
 
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -56,11 +57,36 @@ class Broodjes_Public {
 	 * @param      string    $broodjes       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $broodjes, $version, $error ) {
+	public function __construct( $broodjes, $version, $error) {
 
 		$this->broodjes = $broodjes;
 		$this->version 	= $version;
 		$this->error  	= $error;
+	}
+
+	/**
+	 * Get tablename with prefix
+	 * @param  string $table_name tablename
+	 * @return string             tablename with prefix
+	 */
+	protected function table( $table_name )
+	{
+		global $wpdb;
+
+		return $wpdb->prefix . $table_name;
+	}
+
+	/**
+	 * Include the file from the view
+	 * 
+	 * @param  string $file file from the view.
+	 * @return string       path to file from the view.
+	 */
+	protected function view( $file )
+	{
+		$path = "partials/" . $file;
+
+		return $path;
 	}
 
 	/**
@@ -105,7 +131,7 @@ class Broodjes_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->broodjes, plugin_dir_url( __FILE__ ) . 'js/broodjes-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->broodjes, plugin_dir_url( __FILE__ ) . 'js/broodjes-public-form.js', array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -122,31 +148,12 @@ class Broodjes_Public {
 
 		if(is_user_logged_in())
 		{
-
 			$file = plugin_dir_path(__DIR__) . "admin/data/bestelformulier.json";
 			$data = file_get_contents($file);
 			$obj  = json_decode($data, true);
-		?>
-			<section id="bestelformulier">
-				<h1>Bestelformulier</h1>
-				<form action="http://wamp.broodjes.ch/betalen/" method="post">	
-					<?php foreach($obj as $result) : ?>
-						
-						<p>
-							<?=$result['sieges']; ?>
-							<span>
-								€ <?=$result["price"]?>
-								<input name="checkbox_order[]" type="checkbox" value="<?=$result['siege_id']?>" style="min-height:20px;min-width:20px;">
-							</span>
-							<hr>
-						</p>
-						
-					<?php endforeach; ?>
-					<input type="submit" name="submit_to_cart" class="button button-secondary" value="Bestellen">
-				</form>
-			</section>
 
-		<?php
+			include $this->view('broodjes-public-form.php');
+
 		}
 		else
 		{
@@ -162,6 +169,8 @@ class Broodjes_Public {
 		ob_start();
 		global $wpdb;
 
+		$table = $this->table('sieges');
+
 		// controleer of de gebruiker is ingelogged.
 		if(is_user_logged_in())
 		{
@@ -171,57 +180,39 @@ class Broodjes_Public {
 			{
 				die('U heeft nog geen bestelling gemaakt.');
 			}
+			else
+			{
+				$orders_id = $_POST['checkbox_order'];	
+				$ordersArray = [];	
 
-			$orders = $_POST['checkbox_order'];		
-		?>
-			<section id="checkout_cart">
-			<?php 
-				foreach ($orders as $order) : 
-					$cart = $wpdb->get_results("SELECT `siege_id`, `siege_name`, `siege_price` FROM `wp5415_sieges` WHERE siege_id='$order'") or die('Geen resultaten');
+				foreach ($orders_id as $order_id) 
+				{
+					$results = $wpdb->get_results("SELECT `siege_id`, `siege_name`, `siege_price` FROM `$table` WHERE siege_id='$order_id'") or die('Geen resultaten');
 
-					$arr = explode('.', $cart[0]->siege_price);
-					
-					$i = 0;
+					// Push results in a temorary array with objects.
+					foreach ($results as $result) 
+					{
+						array_push($ordersArray, $result);
+					}
+				}
 
-					print $arr[0][$i];
-					
-			?> 
-					<p>
-						<?=$cart[0]->siege_name?>
-						<span>
-							€	<?=$cart[0]->siege_price;?>	
-						</span>
-					</p>
-					<br>			
-
-			<?php endforeach; ?>
+				include $this->view('broodjes-public-cart.php');
+			}
 			
-			<hr>
-			<b>
-				Totaal:
-				<span>€ <?php print $arr[0];?></span>
-			</b>
-
-			</section>
-			
-			<form action="<?php echo esc_url( ( admin_url('admin-post.php') ) ); ?>" method="post">	
-				<input type="hidden" name="action" value="submit_user_order">
-				<input type="hidden" name="confirm_checkout" value="<?=$orders;?>">
-				<input type="submit" name="submit_order" class="button button-secondary" value="Bestelling afronden">
-				<a href="http://wamp.broodjes.ch" style="padding: 15px;">Afbreken</a>
-			</form>
-		<?php
 		}
 		else
 		{
 			echo $this->error;
 		}
+
 		return ob_get_clean();
 	}
 
 	function handle_user_order()
 	{
 		global $wpdb; 
+
+		$table = $this->table('orders');
 
 		date_default_timezone_set('Europe/Amsterdam');
 		$user = wp_get_current_user();
@@ -234,7 +225,7 @@ class Broodjes_Public {
 
 		foreach ($orders as $siege_id) 
 		{
-			$wpdb->query("INSERT INTO `wp5415_orders`(`order_id`, `user_id`, `order_date`) VALUES ($siege_id,$user->ID, NOW() )");
+			$wpdb->query("INSERT INTO `$table`(`order_id`, `user_id`, `order_date`) VALUES ($siege_id,$user->ID, NOW() )");
 		}
 
 	    if ( wp_redirect( get_site_url() ) ) {

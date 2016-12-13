@@ -54,24 +54,37 @@ class Broodjes_Admin_Mail {
 
 	}
 
+	/**
+	 * Get tablename with prefix
+	 * @param  string $table_name tablename
+	 * @return string             tablename with prefix
+	 */
+	protected function table( $table_name )
+	{
+		global $wpdb;
+
+		return $wpdb->prefix . $table_name;
+	}
+
+	/**
+	 * Include the file from the view
+	 * 
+	 * @param  string $file file from the view.
+	 * @return string       path to file from the view.
+	 */
+	protected function view( $file )
+	{
+		$path = "partials/" . $file;
+
+		return $path;
+	}
+
 	public function send_mail_options()
 	{
 		$content = '';
 		$editor_id = 'mycustomeditor';
-	?>
-		<form action="<?php echo esc_url( ( admin_url('admin-post.php') ) ); ?>" method="post" enctype="multipart/form-data">		
 
-			<label>Onderwerp:</label>
-				<br>
-				<input type="text" name="mail_subject" style="width:100%;"><br>
-
-			<hr>
-				<?php wp_editor( $content, $editor_id ); ?>
-			<br>
-				<input type="hidden" name="send_mail_to">
-				<input type="submit" name="send_mail" class="button button_secondary"  value="Verstuur mail">
-		</form>
-	<?php
+		include $this->view('broodjes-admin-mail.php');
 	}
 
 }

@@ -40,6 +40,7 @@ class Broodjes_Public_Employees {
 	 */
 	private $version;
 
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -54,63 +55,35 @@ class Broodjes_Public_Employees {
 
 	}
 
-    public function employees_options()
+	/**
+	 * Include the file from the view
+	 * 
+	 * @param  string $file file from the view.
+	 * @return string       path to file from the view.
+	 */
+	protected function view( $file )
 	{
-	?>
-		<h3>Voeg collega toe</h3>
-		<form action="<?php echo esc_url( public_url('public-post.php') ); ?>" method="post">
+		$path = "partials/" . $file;
+
+		return $path;
+	}
+
+    public function create_employee_option()
+	{
+		ob_start();
+		
+		include $this->view('broodjes-public-create-employee.php');
+
+		return ob_get_clean();
+	}
+
+	public function delete_employee_option()
+	{
+		ob_start();
 	
-			<label>Naam:</label>
-			    <input type="text" name="employee_name" required><br>
-			
-			<label>Email:</label>
-			    <input type="email" name="employee_email" required><br>
+		include $this->view('broodjes-public-delete-employee.php');
 
-			<label>Wachtwoord:</label>
-			    <input type="password" name="employee_password" required><br>
-
-			<label>Herhaal wachtwoord</label>
-			    <input type="password" name="employee_password_confirm" required><br>
-
-			    <input type="hidden" name="action" value="employee_process_form">
-			    <select style="display: none;">
-				   <?php wp_dropdown_roles( 'subscriber' ); ?>
-				</select>
-				<input type="submit" name="add_employee" class="button button_secondary" value="Opslaan">
-		</form><br>
-		<hr>
-		<form action="<?php echo esc_url( public_url('public-post.php') ); ?>" method="post">
-		<section id="employee">
-
-			<h3>Werknemers</h3>
-
-            <table style="width:100%;">
-			    <tr>
-                    <td><b>Selecteer alles: </b></td>
-                    <td></td>
-                    <td><input type="checkbox" name="all_employees" id="alles" /></td>
-                </tr>
-            </table><br>
-
-            <table style="width:100%;">
-                <tr>
-                    <td><b>Naam:</b></td>
-                    <td><b>Email:</b></td>
-                </tr>
-                <tr>
-				<?php foreach ($this->get_employees() as $employee): ?>
-                    <td><?php echo $employee->user_login . "</td><td> " . $employee->user_email . "</td>";?>
-                    <td><input name="checkbox_employee[]" type="checkbox" id="select_employee" name="select_employees" value="<?=$employee->ID; ?>"></td>
-                </tr>
-				<?php endforeach; ?>
-				
-            </table><br>
-
-		</section>
-			<input type="hidden" name="action" value="employee_delete">
-			<input type="submit" name="delete_employee" class="button button-secondary" value="Verwijderen">
-		</form><br>
-	<?php
+		return ob_get_clean();
 	}
 
 	public function add_employee_process_form()

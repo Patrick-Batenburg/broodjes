@@ -92,7 +92,7 @@ class Broodjes {
 		$this->define_admin_mail_hooks();
 		
 		/*Public Hooks*/
-		$this->define_public_hooks();
+		$this->define_public_form_hooks();
 		$this->define_public_users_hooks();
 		$this->define_public_employees_hooks();
 
@@ -157,7 +157,7 @@ class Broodjes {
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-broodjes-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-broodjes-public-form.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public users area.
@@ -201,9 +201,9 @@ class Broodjes {
 
 		$plugin_admin = new Broodjes_Admin( $this->get_broodjes(), $this->get_version() );
 
+		// Action hooks
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu' );
 
 	}
@@ -219,6 +219,7 @@ class Broodjes {
 
 		$plugin_admin = new Broodjes_Admin_Organisations( $this->get_broodjes(), $this->get_version() );
 		
+		// Action hooks
 		$this->loader->add_action( 'admin_post_organisation_process_form', $plugin_admin, 'add_organisation_process_form' );
 		$this->loader->add_action( 'admin_post_organisation_delete', $plugin_admin, 'delete_organisation' );
 
@@ -247,6 +248,7 @@ class Broodjes {
 
 		$plugin_admin = new Broodjes_Admin_Scheme( $this->get_broodjes(), $this->get_version() );
 
+		// Action hooks
 		$this->loader->add_action( 'admin_post_collect_sieges_for_submit', $plugin_admin, 'write_data_to_json');
 
 	}
@@ -262,6 +264,7 @@ class Broodjes {
 
 		$plugin_admin = new Broodjes_Admin_Sieges( $this->get_broodjes(), $this->get_version() );
 
+		// Action hooks
 		$this->loader->add_action( 'admin_post_sieges_process_form', $plugin_admin, 'add_siege_process_form' );
 		$this->loader->add_action( 'admin_post_siege_delete', $plugin_admin, 'delete_sieges' );	
 
@@ -274,16 +277,19 @@ class Broodjes {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_public_hooks() {
+	private function define_public_form_hooks() {
 
-		$plugin_public = new Broodjes_Public( $this->get_broodjes(), $this->get_version(), $this->get_error() );
+		$plugin_public = new Broodjes_Public_Form( $this->get_broodjes(), $this->get_version(), $this->get_error() );
 
+		// Action hooks
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_post_submit_user_order', $plugin_public, 'handle_user_order' );
 
+		// Add shortcode hooks
 		$this->loader->add_shortcode( 'bestelformulier', $plugin_public, 'render_form' );
 		$this->loader->add_shortcode( 'checkout', $plugin_public, 'render_cart' );
-		$this->loader->add_action( 'admin_post_submit_user_order', $plugin_public, 'handle_user_order' );
+		
 	}
 
 	/**
@@ -297,10 +303,15 @@ class Broodjes {
 
 		$plugin_public = new Broodjes_Public_Users( $this->get_broodjes(), $this->get_version(), $this->get_error() );
 
+		// Action hooks
 		$this->loader->add_action( 'init', $plugin_public, 'redirect_login_page' );
 		$this->loader->add_action( 'wp_login_failed', $plugin_public, 'login_failed' );
 		$this->loader->add_action( 'init', $plugin_public, 'redirect_login_page' );
+
+		// Add filter hooks
 		$this->loader->add_filter( 'authenticate', $plugin_public, 'verify_username_password', 1, 3 );
+
+		// Add shortcode hooks
 		$this->loader->add_shortcode( 'broodjes_user_login', $plugin_public, 'render_user_login' );
 
 	}
@@ -316,8 +327,13 @@ class Broodjes {
 
 		$plugin_public = new Broodjes_Public_Employees( $this->get_broodjes(), $this->get_version() );
 		
-		$this->loader->add_action( 'admin_post_employee_process_form', $plugin_admin, 'add_employee_process_form' );
-		$this->loader->add_action( 'admin_post_employee_delete', $plugin_admin, 'delete_employee' );
+		// Action hooks
+		$this->loader->add_action( 'admin_post_employee_process_form', $plugin_public, 'add_employee_process_form' );
+		$this->loader->add_action( 'admin_post_employee_delete', $plugin_public, 'delete_employee' );
+
+		// Add shortcode hooks
+		$this->loader->add_shortcode( 'create_employee_option', $plugin_public, 'create_employee_option' );
+		$this->loader->add_shortcode( 'delete_employee_option', $plugin_public, 'delete_employee_option' );
 
 	}
 

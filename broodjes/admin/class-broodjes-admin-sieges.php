@@ -50,61 +50,45 @@ class Broodjes_Admin_Sieges {
 	public function __construct( $broodjes, $version ) {
 
 		$this->broodjes = $broodjes;
-		$this->version = $version;
+		$this->version 	= $version;
 
+	}
+
+	/**
+	 * Get tablename with prefix
+	 * @param  string $table_name tablename
+	 * @return string             tablename with prefix
+	 */
+	protected function table( $table_name )
+	{
+		global $wpdb;
+
+		return $wpdb->prefix . $table_name;
+	}
+
+	/**
+	 * Include the file from the view
+	 * 
+	 * @param  string $file file from the view.
+	 * @return string       path to file from the view.
+	 */
+	protected function view( $file )
+	{
+		$path = "partials/" . $file;
+
+		return $path;
 	}
 
     public function menu_options()
 	{
-	?>  
-		<h3>Voeg nieuw beleg toe.</h3>
-		<form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="post">
-	
-			<label>Beleg:</label>
-			    <input type="text" name="siege_name" required><br>
-			
-			<label>Prijs:</label>
-			    <input type="number" name="siege_price_one" MIN="0" MAX="100" required>
-			    <input type="number" name="siege_price_two" MIN="0" MAX="99" STEP="05">
-			    	<br>
-			    <input type="hidden" name="action" value="sieges_process_form"><br>
-				<input type="submit" name="add_siege" class="button button_secondary" value="Opslaan">
-		</form><br>
-		<hr>
-		<section id="sieges">
-				<h3>Bestel formulier</h3>
-		<form action="<?php echo esc_url( ( admin_url('admin-post.php') ) ); ?>" method="post">	
-
-			 <table style="width:100%;">
-			    <tr>
-                    <td><b>Selecteer alles: </b></td>
-                    <td></td>
-                    <td><input type="checkbox" name="all_sieges" id="all_sieges" /></td>
-                </tr>
-            </table><br>
-
-			 <table style="width:100%;">
-                 <tr>
-                    <td><b>Beleg:</b></td>
-                    <td><b>Prijs:</b></td>
-                 </tr>
-                 <tr>
-                    <?php foreach ($this->get_sieges() as $siege) : ?>
-                        <td><?php echo  $siege->siege_name . "</td><td>€  " . $siege->siege_price ;?></td> 
-                        <td><input name="checkbox_sieges[]" type="checkbox" name="select_sieges" value="<?=$siege->siege_id; ?>"></td>
-                 </tr>
-                    <?php endforeach; ?>
-            </table><br>
-				
-			<input type="hidden" name="action" value="siege_delete">
-			<input type="submit" name="delete_sieges" class="button button-secondary" value="Verwijderen">
-		</form><br>
-	<?php
+		include $this->view('broodjes-admin-sieges.php');
 	}
 
 	public function add_siege_process_form()
 	{
 		global $wpdb; 
+
+		$table = $this->table('sieges');
 
 		$price_one = $_POST['siege_price_one'];
 		$price_two = $_POST['siege_price_two'];
@@ -116,7 +100,7 @@ class Broodjes_Admin_Sieges {
 	    $siege_name = sanitize_text_field($_POST['siege_name']);
 	    $siege_price = sanitize_text_field($price_one) . "." . sanitize_text_field($price_two);
 
-	    $wpdb->query("INSERT INTO `wp5415_sieges`(`siege_name`, `siege_price`) VALUES ( '$siege_name', '$siege_price')");
+	    $wpdb->query("INSERT INTO `$table`(`siege_name`, `siege_price`) VALUES ( '$siege_name', '$siege_price')");
 
 
 	    $url = esc_url( admin_url('admin.php?page=broodjes_options') );
@@ -129,7 +113,9 @@ class Broodjes_Admin_Sieges {
 	{
 		global $wpdb;
 
-		$sieges = $wpdb->get_results("SELECT * FROM `wp5415_sieges`") or print "Geen resultaten gevonden";
+		$table = $this->table('sieges');
+
+		$sieges = $wpdb->get_results("SELECT * FROM `$table`") or print "Geen resultaten gevonden";
 
 		return $sieges;
 	}
@@ -138,11 +124,13 @@ class Broodjes_Admin_Sieges {
 	{
 		global $wpdb;
 
+		$table = $this->table('sieges');
+
 		$sieges = $_POST['checkbox_sieges'];
 
 		foreach ($sieges as $siege) {
 			$siege_id = sanitize_text_field($siege);
-			$wpdb->query("DELETE FROM `wp5415_sieges` WHERE siege_id=$siege_id");
+			$wpdb->query("DELETE FROM `$table` WHERE siege_id=$siege_id");
 		}
 
 	    $url = esc_url( admin_url('admin.php?page=broodjes_options') );
