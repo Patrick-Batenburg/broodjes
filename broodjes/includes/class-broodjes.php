@@ -83,12 +83,18 @@ class Broodjes {
 
 		$this->load_dependencies();
 		$this->set_locale();
+		
+		/*Admin Hooks*/
 		$this->define_admin_hooks();
-		$this->define_admin_employees_hooks();
+		$this->define_admin_organisations_hooks();
 		$this->define_admin_sieges_hooks();
 		$this->define_admin_scheme_hooks();
+		$this->define_admin_mail_hooks();
+		
+		/*Public Hooks*/
 		$this->define_public_hooks();
 		$this->define_public_users_hooks();
+		$this->define_public_employees_hooks();
 
 	}
 
@@ -128,9 +134,14 @@ class Broodjes {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-broodjes-admin.php';
 
 		/**
-		 * The class responsible for defining all actions that occur in the admin employees area.
+		 * The class responsible for defining all actions that occur in the admin organisations area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-broodjes-admin-employees.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-broodjes-admin-organisations.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in the admin mail area.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-broodjes-admin-mail.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin scheme area.
@@ -152,6 +163,11 @@ class Broodjes {
 		 * The class responsible for defining all actions that occur in the public users area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-broodjes-public-users.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in the public employees area.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-broodjes-public-employees.php';
 
 		$this->loader = new Broodjes_Loader();
 
@@ -199,12 +215,39 @@ class Broodjes {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_admin_employees_hooks() {
+	private function define_admin_organisations_hooks() {
 
-		$plugin_admin = new Broodjes_Admin_Employees( $this->get_broodjes(), $this->get_version() );
+		$plugin_admin = new Broodjes_Admin_Organisations( $this->get_broodjes(), $this->get_version() );
 		
-		$this->loader->add_action( 'admin_post_employee_process_form', $plugin_admin, 'add_employee_process_form' );
-		$this->loader->add_action( 'admin_post_employee_delete', $plugin_admin, 'delete_employee' );
+		$this->loader->add_action( 'admin_post_organisation_process_form', $plugin_admin, 'add_organisation_process_form' );
+		$this->loader->add_action( 'admin_post_organisation_delete', $plugin_admin, 'delete_organisation' );
+
+	}
+
+	/**
+	 * Register all of the hooks related to the admin mail area functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_admin_mail_hooks() {
+
+		$plugin_admin = new Broodjes_Admin_Mail( $this->get_broodjes(), $this->get_version() );
+	}
+
+	/**
+	 * Register all of the hooks related to the admin scheme area functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_admin_scheme_hooks() {
+
+		$plugin_admin = new Broodjes_Admin_Scheme( $this->get_broodjes(), $this->get_version() );
+
+		$this->loader->add_action( 'admin_post_collect_sieges_for_submit', $plugin_admin, 'write_data_to_json');
 
 	}
 
@@ -221,21 +264,6 @@ class Broodjes {
 
 		$this->loader->add_action( 'admin_post_sieges_process_form', $plugin_admin, 'add_siege_process_form' );
 		$this->loader->add_action( 'admin_post_siege_delete', $plugin_admin, 'delete_sieges' );	
-
-	}
-
-	/**
-	 * Register all of the hooks related to the admin scheme area functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_admin_scheme_hooks() {
-
-		$plugin_admin = new Broodjes_Admin_Scheme( $this->get_broodjes(), $this->get_version() );
-
-		$this->loader->add_action( 'admin_post_collect_sieges_for_submit', $plugin_admin, 'write_data_to_json');
 
 	}
 
@@ -274,6 +302,22 @@ class Broodjes {
 		$this->loader->add_action( 'init', $plugin_public, 'redirect_login_page' );
 		$this->loader->add_filter( 'authenticate', $plugin_public, 'verify_username_password', 1, 3 );
 		$this->loader->add_shortcode( 'broodjes_user_login', $plugin_public, 'render_user_login' );
+
+	}
+
+	/**
+	 * Register all of the hooks related to the admin employees area functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_public_employees_hooks() {
+
+		$plugin_public = new Broodjes_Public_Employees( $this->get_broodjes(), $this->get_version() );
+		
+		$this->loader->add_action( 'admin_post_employee_process_form', $plugin_admin, 'add_employee_process_form' );
+		$this->loader->add_action( 'admin_post_employee_delete', $plugin_admin, 'delete_employee' );
 
 	}
 

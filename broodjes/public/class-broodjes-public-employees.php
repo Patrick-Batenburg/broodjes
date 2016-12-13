@@ -1,26 +1,26 @@
 <?php
 
 /**
- * The admin-specific functionality of the plugin.
+ * The public-specific functionality of the plugin.
  *
  * @link       www.silvas.nl
  * @since      1.0.0
  *
  * @package    Broodjes
- * @subpackage Broodjes/admin
+ * @subpackage Broodjes/public
  */
 
 /**
- * The admin-specific functionality of the plugin.
+ * The public-specific functionality of the plugin.
  *
  * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
+ * enqueue the public-specific stylesheet and JavaScript.
  *
  * @package    Broodjes
- * @subpackage Broodjes/admin
+ * @subpackage Broodjes/public
  * @author     Silvas <stage@silvas.nl>
  */
-class Broodjes_Admin_Employees {
+class Broodjes_Public_Employees {
 
 	/**
 	 * The ID of this plugin.
@@ -58,7 +58,7 @@ class Broodjes_Admin_Employees {
 	{
 	?>
 		<h3>Voeg collega toe</h3>
-		<form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="post">
+		<form action="<?php echo esc_url( public_url('public-post.php') ); ?>" method="post">
 	
 			<label>Naam:</label>
 			    <input type="text" name="employee_name" required><br>
@@ -79,7 +79,7 @@ class Broodjes_Admin_Employees {
 				<input type="submit" name="add_employee" class="button button_secondary" value="Opslaan">
 		</form><br>
 		<hr>
-		<form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="post">
+		<form action="<?php echo esc_url( public_url('public-post.php') ); ?>" method="post">
 		<section id="employee">
 
 			<h3>Werknemers</h3>
@@ -135,7 +135,7 @@ class Broodjes_Admin_Employees {
 			$employee_id = wp_create_user( $employee_name, $employee_pwd, $employee_email );
 
 			// after processing redirect back to the side
-		    $url = esc_url( admin_url('admin.php?page=broodjes_options') );
+		    $url = esc_url( public_url('public.php?page=broodjes_options') );
 		    if ( wp_redirect( $url ) ) {
 		    	exit;
 		    }
@@ -170,7 +170,7 @@ class Broodjes_Admin_Employees {
 			$wpdb->query("DELETE FROM $wpdb->users WHERE ID=$employee_id");
 		}
 
-	    $url = esc_url( admin_url('admin.php?page=broodjes_options') );
+	    $url = esc_url( public_url('public.php?page=broodjes_options') );
 	    if ( wp_redirect( $url ) ) {
 	    	exit;
 	    }

@@ -42,25 +42,22 @@
 	    $("#" + tab_id).addClass('current');
 	  });
 
-		// SELECT ALL EMPLOYEES
-	  $('input[name="all_employees"],input[name="geselecteerd"]').bind('click', function(){
+		// SELECT ALL ORGANISTATIONS
+	  $('input[name="all_organisations"],input[name="geselecteerd"]').bind('click', function(){
 		var status = $(this).is(':checked');
-		$('input[name="checkbox_employee[]"]').attr('checked', status);
-	 
+		$('input[name="checkbox_organisation[]"]').attr('checked', status);
 	 });
 
 	 	// SELECT ALL SIEGES
 	  $('input[name="all_sieges"],input[name="select_sieges"]').bind('click', function(){
 		var status = $(this).is(':checked');
 		$('input[name="checkbox_sieges[]"]').attr('checked', status);
-	 
 	 });
 
 	 	// SELECT ALL FORM CHECKBOXES
 	  $('input[name="all_form_sieges"],input[name="select_form_sieges"]').bind('click', function(){
 		var status = $(this).is(':checked');
 		$('input[name="checkbox_scheme_sieges[]"]').attr('checked', status);
-	 
 	 });
 
 	});

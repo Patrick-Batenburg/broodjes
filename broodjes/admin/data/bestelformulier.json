@@ -5,21 +5,6 @@
         "price": "1.00"
     },
     {
-        "siege_id": "18",
-        "sieges": "Plakje Kipfilet",
-        "price": "0.25"
-    },
-    {
-        "siege_id": "17",
-        "sieges": "Plakje Kaas",
-        "price": "0.30"
-    },
-    {
-        "siege_id": "16",
-        "sieges": "Plakje Ham",
-        "price": "0.25"
-    },
-    {
         "siege_id": "20",
         "sieges": "Wit broodje",
         "price": "1.00"

@@ -87,11 +87,11 @@ class Broodjes_Public_Users {
 	    	$login  = (isset($_GET['login']) ) ? $_GET['login'] : 0;
 
 		    if ( $login === "failed" ) {
-		    echo '<p class="login-msg"><strong>ERROR:</strong> Ongeldige gebruikersnaam en/of wachtwoord.</p>';
+		    	echo '<p class="login-msg"><strong>ERROR:</strong> Ongeldige gebruikersnaam en/of wachtwoord.</p>';
 		    } elseif ( $login === "empty" ) {
-		    echo '<p class="login-msg"><strong>ERROR:</strong> Gebruikersnaam of wachtwoord is leeg. </p>';
+		    	echo '<p class="login-msg"><strong>ERROR:</strong> Gebruikersnaam of wachtwoord is leeg. </p>';
 		    } elseif ( $login === "false" ) {
-		    echo '<p class="login-msg"><strong>ERROR:</strong> U bent uitgelogd.</p>';
+		    	echo '<p class="login-msg"><strong>ERROR:</strong> U bent uitgelogd.</p>';
 		    }
 
 		    wp_login_form( $args );
