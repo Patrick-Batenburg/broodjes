@@ -1,42 +1,57 @@
 [
     {
-        "siege_id": "19",
-        "sieges": "Bruin broodje",
-        "price": "1.00"
+        "siege_id": "1",
+        "sieges": "Plakje kaas",
+        "price": "0.55"
     },
     {
-        "siege_id": "20",
-        "sieges": "Wit broodje",
-        "price": "1.00"
+        "siege_id": "2",
+        "sieges": "Plakje ham",
+        "price": "0.35"
     },
     {
-        "siege_id": "21",
-        "sieges": "Hagelslag",
+        "siege_id": "3",
+        "sieges": "Plakje kipfilet",
         "price": "0.45"
     },
     {
-        "siege_id": "22",
-        "sieges": "Pasta met kaas",
-        "price": "3.50"
-    },
-    {
-        "siege_id": "23",
-        "sieges": "Broodje gezond met zalm",
-        "price": "1.70"
-    },
-    {
-        "siege_id": "24",
-        "sieges": "Melk 0.25cl",
-        "price": "0.85"
-    },
-    {
-        "siege_id": "25",
-        "sieges": "Thee",
-        "price": "0.50"
-    },
-    {
-        "siege_id": "26",
-        "sieges": "Koffie",
+        "siege_id": "4",
+        "sieges": "Hagelslag",
         "price": "0.60"
+    },
+    {
+        "siege_id": "5",
+        "sieges": "Kruidenboter",
+        "price": "0.95"
+    },
+    {
+        "siege_id": "6",
+        "sieges": "Stokbrood",
+        "price": "1.25"
+    },
+    {
+        "siege_id": "7",
+        "sieges": "Wit brood",
+        "price": "1.30"
+    },
+    {
+        "siege_id": "8",
+        "sieges": "Bruin brood",
+        "price": "1.60"
+    },
+    {
+        "siege_id": "9",
+        "sieges": "Koffie",
+        "price": "2.00"
+    },
+    {
+        "siege_id": "10",
+        "sieges": "Melk",
+        "price": "1.55"
+    },
+    {
+        "siege_id": "11",
+        "sieges": "Water",
+        "price": "0.90"
     }
 ]

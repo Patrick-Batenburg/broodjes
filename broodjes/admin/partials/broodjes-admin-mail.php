@@ -13,15 +13,16 @@
  */
 ?>
 
-<form action="<?php echo esc_url( ( admin_url('admin-post.php') ) ); ?>" method="post" enctype="multipart/form-data">		
+		<form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="post" enctype="multipart/form-data">	
 
-	<label>Onderwerp:</label>
-		<br>
-		<input type="text" name="mail_subject" style="width:100%;"><br>
+			<label>Onderwerp:</label>
+				<br>
+				<input type="text" name="mail_subject" style="width:100%;"><br>
 
-	<hr>
-		<?php wp_editor( $content, $editor_id ); ?>
-	<br>
-		<input type="hidden" name="send_mail_to">
-		<input type="submit" name="send_mail" class="button button_secondary"  value="Verstuur mail">
-</form>
+			<hr>
+				<?php wp_editor( $content, $editor_name ); ?>
+			<br>
+			
+				<input type="hidden" name="action" value="send_mail_to">
+				<input type="submit" name="send_mail_to_users" class="button button_secondary"  value="Verstuur mail">
+		</form>

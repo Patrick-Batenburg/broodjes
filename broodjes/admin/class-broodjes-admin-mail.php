@@ -82,9 +82,43 @@ class Broodjes_Admin_Mail {
 	public function send_mail_options()
 	{
 		$content = '';
-		$editor_id = 'mycustomeditor';
+		$editor_name = 'mycustomeditor';
 
 		include $this->view('broodjes-admin-mail.php');
+	}
+
+	public function send_mail_to_users()
+	{
+		$tempArr = [];
+
+		foreach ( $this->get_users_mail() as $user ) {
+
+			$string = $user->user_email;
+
+			array_push($tempArr, $string);
+		}
+
+		$to = $tempArr;
+		$subject = $_POST['mail_subject'];
+		$body = $_POST['mycustomeditor'];
+		$headers = array('From: <williamlindhout@gmail.com');
+		
+		wp_mail( $to, $subject, $body, $headers );
+
+		$url = esc_url( admin_url('admin.php?page=broodjes_options') );
+	    if ( wp_redirect( $url ) ) {
+	    	exit;
+	    }
+
+	}
+
+	public function get_users_mail()
+	{
+		global $wpdb;
+
+		$user_mail = $wpdb->get_results("SELECT `user_email` FROM `wp5415_users` ") or die;
+
+		return $user_mail;
 	}
 
 }

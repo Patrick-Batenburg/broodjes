@@ -235,6 +235,8 @@ class Broodjes {
 	private function define_admin_mail_hooks() {
 
 		$plugin_admin = new Broodjes_Admin_Mail( $this->get_broodjes(), $this->get_version() );
+
+		$this->loader->add_action( 'admin_post_send_mail_to', $plugin_admin, 'send_mail_to_users' );
 	}
 
 	/**
