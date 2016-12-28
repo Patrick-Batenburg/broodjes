@@ -28,3 +28,8 @@
 #checkout_cart hr {
 	margin: 15px 0px!important;
 }
+
+td#selected_sieges_number {
+    padding-bottom: 0;
+    padding-top: 18px;
+}

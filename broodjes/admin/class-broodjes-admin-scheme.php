@@ -123,7 +123,7 @@ class Broodjes_Admin_Scheme {
 			$jsonString = array(
 				'siege_id'	=> $data[0]->siege_id,
 				'sieges' 	=> $data[0]->siege_name,
-				'price' 	=> $data[0]->siege_price
+				'price' 	=> $data[0]->siege_price			
 			);
 
 

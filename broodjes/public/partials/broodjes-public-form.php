@@ -21,16 +21,18 @@
             <tr>
                 <td><b>Beleg & Beverages</b></td>
                 <td><b>Prijs</b></td>
+				<td><b>Aantal</b></td>
                 <td><b>Selecteer</b></td>
-            </tr>
+            </tr>	
 			
 			<?php foreach($obj as $result) : ?>
 			
 			<tr>
 				<td><?=$result['sieges']; ?></td>
 				<td>€ <?=$result["price"]?></td>
+				<td id="selected_sieges_number" style="width: 100px;"><input name="sieges_total_number" type="number" MIN="1" value="1"></td>
 				<td style="width: 100px;"><input name="checkbox_order[]" type="checkbox" value="<?=$result['siege_id']?>"></td>
-			</tr>	
+			</tr>
 				
 			<?php endforeach; ?>
 

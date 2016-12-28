@@ -15,7 +15,7 @@
 #brd-wrapper {
 	padding: 15px;
 	width: 100%;
-	max-width: 700px;
+	max-width: 662px;
 	height: auto;
 }
 
@@ -78,7 +78,7 @@
 
 /* TABS/DASHICONS */
 
-#brd-wrapper span.dashicons.dashicons-admin-users,
+#brd-wrapper span.dashicons.dashicons-building,
 #brd-wrapper span.dashicons.dashicons-list-view, 
 #brd-wrapper span.dashicons.dashicons-share-alt2,
 #brd-wrapper span.dashicons.dashicons-email {
