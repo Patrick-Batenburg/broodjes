@@ -48,10 +48,10 @@
 		$('input[name="checkbox_organisation[]"]').attr('checked', status);
 	 });
 
-	 	// SELECT ALL SIEGES
-	  $('input[name="all_sieges"],input[name="select_sieges"]').bind('click', function(){
+	 	// SELECT ALL ORDERS
+	  $('input[name="all_orders"],input[name="select_order"]').bind('click', function(){
 		var status = $(this).is(':checked');
-		$('input[name="checkbox_sieges[]"]').attr('checked', status);
+		$('input[name="check_order[]"]').attr('checked', status);
 	 });
 
 	 	// SELECT ALL FORM CHECKBOXES
@@ -59,6 +59,7 @@
 		var status = $(this).is(':checked');
 		$('input[name="checkbox_scheme_sieges[]"]').attr('checked', status);
 	 });
+
 
 	});
 

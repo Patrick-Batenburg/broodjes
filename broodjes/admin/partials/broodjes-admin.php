@@ -34,7 +34,7 @@
 	</div>
 	<div id="tab-2" class="tab-content">
 		<?php 
-			$employees = new Broodjes_Admin_Sieges($this->broodjes, $this->version);
+			$employees = new Broodjes_Admin_Order($this->broodjes, $this->version);
 			$employees->menu_options();
 		?>
 	</div>

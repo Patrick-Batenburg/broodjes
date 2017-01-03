@@ -82,7 +82,7 @@ class Broodjes_Admin_Scheme {
 
 	public function send_form_options()
 	{
-		$sieges = new Broodjes_Admin_Sieges($this->broodjes, $this->version);
+		$sieges = new Broodjes_Admin_Order($this->broodjes, $this->version);
 	
 		include $this->view('broodjes-admin-scheme.php');
 	}

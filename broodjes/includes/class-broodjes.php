@@ -87,7 +87,7 @@ class Broodjes {
 		/*Admin Hooks*/
 		$this->define_admin_hooks();
 		$this->define_admin_organisations_hooks();
-		$this->define_admin_sieges_hooks();
+		$this->define_admin_order_hooks();
 		$this->define_admin_scheme_hooks();
 		$this->define_admin_mail_hooks();
 		
@@ -149,9 +149,9 @@ class Broodjes {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-broodjes-admin-scheme.php';
 
 		/**
-		 * The class responsible for defining all actions that occur in the admin sieges area.
+		 * The class responsible for defining all actions that occur in the admin order area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-broodjes-admin-sieges.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-broodjes-admin-order.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -256,19 +256,20 @@ class Broodjes {
 	}
 
 	/**
-	 * Register all of the hooks related to the admin sieges area functionality
+	 * Register all of the hooks related to the admin order area functionality
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_admin_sieges_hooks() {
+	private function define_admin_order_hooks() {
 
-		$plugin_admin = new Broodjes_Admin_Sieges( $this->get_broodjes(), $this->get_version() );
+		$plugin_admin = new Broodjes_Admin_Order( $this->get_broodjes(), $this->get_version() );
 
 		// Action hooks
 		$this->loader->add_action( 'admin_post_sieges_process_form', $plugin_admin, 'add_siege_process_form' );
-		$this->loader->add_action( 'admin_post_siege_delete', $plugin_admin, 'delete_sieges' );	
+		$this->loader->add_action( 'admin_post_bread_process_form', $plugin_admin, 'add_bread_process_form' );
+		$this->loader->add_action( 'admin_post_order_delete', $plugin_admin, 'delete_order' );	
 
 	}
 

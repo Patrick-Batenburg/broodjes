@@ -13,7 +13,7 @@
  * @package           Broodjes
  *
  * @wordpress-plugin
- * Plugin Name:       broodjes
+ * Plugin Name:       DoughSystem
  * Plugin URI:        https://github.com/rickdaalhuizen90/broodjes
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
